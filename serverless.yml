@@ -1,0 +1,24 @@
+service: image-analyzer
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  iam:
+    role:
+      statements:
+      - Effect: Allow
+        Action:
+          - rekognition:DetectLabels
+          - rekognition:DetectText
+        Resource: "*"
+
+functions:
+  image-analyzer:
+    handler: src/index.main
+    events:
+      - httpApi:
+          method: GET
+          path: /text/analyze
+
