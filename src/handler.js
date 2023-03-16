@@ -12,7 +12,7 @@ module.exports = class Handler {
     return buffer;
   }
 
-  async detectLabels(imageBuffer) {
+  async detectTextImage(imageBuffer) {
     const result = await this.Rekog.detectText({
       Image: {
         Bytes: imageBuffer,
@@ -35,8 +35,7 @@ module.exports = class Handler {
           response: JSON.stringify({ message: "Imagem inválida" }),
         };
       const imageBuffer = await this.getImageBuffer(imageUrl);
-      const text = await this.detectLabels(imageBuffer);
-      console.log("text", text);
+      const text = await this.detectTextImage(imageBuffer);
       return {
         statusCode: 200,
         body: text,
